@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <ctype.h>
 #define TAM 100000
 
 typedef struct Funcionario {
@@ -55,7 +56,6 @@ void inserirHash ( FILE *arquivo, int chave, TPessoa novo){
     }
     fseek(arquivo, pos * sizeof(TPessoa), SEEK_SET);
     fwrite(&novo, sizeof(TPessoa), 1, arquivo);
-    return;
 }
 
 void excluiHash (FILE *arquivo, int chave){
@@ -69,14 +69,13 @@ void excluiHash (FILE *arquivo, int chave){
     } else {
         printf("Aluno nao encontrado. ERRO EM REMOVER!");
     }
-    return;
 }
 
 void encherHash ( FILE *arquivo ){
     FILE *arq = fopen("listaalunos.bin", "rb");
     if (arq == NULL) {
         printf("Erro ao abrir arquivo!\n");
-        return 0;
+        return;
     }
     
     TPessoa novo;
@@ -118,13 +117,29 @@ int main() {
             case 1: {
                 TPessoa novo;
                 printf("Digite o Nome: ");
-                scanf("%49s", novo.nome);
-                printf("Digite o CPF: ");
-                scanf("%11s", novo.cpf);
+                scanf(" %49[^\n]", novo.nome); // lê até \n, com limite
+
+                printf("Digite o CPF (somente numeros, max 11 digitos): ");
+                scanf(" %11s", novo.cpf);
+
+                // validar CPF numerico
+                int valido = 1;
+                for (int i = 0; novo.cpf[i] != '\0'; i++) {
+                    if (!isdigit((unsigned char)novo.cpf[i])) {
+                        valido = 0;
+                        break;
+                    }
+                }
+                if (!valido) {
+                    printf("CPF invalido! Apenas numeros sao permitidos.\n");
+                    break;
+                }
+
                 char strid[10];
                 strncpy(strid, novo.cpf, 9);
                 strid[9] = '\0';
                 novo.id = atoi(strid);
+
                 printf("Digite a Nota: ");
                 scanf("%d", &novo.nota);
                 inserirHash(arquivo, novo.id, novo);
