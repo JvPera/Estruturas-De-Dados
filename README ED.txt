@@ -1,0 +1,5 @@
+O propósito central deste projeto de Estruturas de Dados é produzir um arquivo contendo dez mil entradas e, em seguida, empregar três modelos de Estrutura de Dados: uma árvore B+, uma tabela hash (endereçamento aberto) e um heap. Para uma clara
+e melhor organização, o material foi dividido em diretórios. A pasta "Lista - Criação) engloba o script encarregado de 
+construir o arquivo com as entradas, além do executável e do próprio arquivo resultante. As três pastas remanescentes — uma destinada à árvore B+, uma para a tabela hash e outra para o heap — incluem, cada uma, o código-fonte da estrutura pertinente, o executável e o arquivo de dados de entrada. O projeto foi elaborado de maneira simples e objetiva, visando ilustrar de maneira prática o modo como essas estruturas operam e como reagem ao lidar com um montante considerável de dados.
+
+Feito por: João Vitor Pereira Rodrigues
